@@ -1,7 +1,5 @@
 package com.github.avli.lox;
 
-import com.sun.tools.doclint.Env;
-
 import java.util.List;
 
 public class Interpreter implements Expr.Visitor, Stmt.Visitor {
