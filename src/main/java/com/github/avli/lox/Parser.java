@@ -22,6 +22,7 @@ import static com.github.avli.lox.TokenType.*;
  *                | forStmt
  *                | ifStmt
  *                | printStmt
+ *                | returnStmt
  *                | whileStmt
  *                | block ;
  *
@@ -29,6 +30,7 @@ import static com.github.avli.lox.TokenType.*;
  * forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
  *                            expression? ";"
  *                            expression? ")" statement ;
+ * returnStmt     → "return" expression? ";" ;
  * ifStmt         → "if" "(" expression ")" statement ( "else" statement )? ;
  * printStmt      → "print" expression ";" ;
  * whileStmt      → "while" "(" expression ")" statement ;
@@ -115,12 +117,24 @@ public class Parser {
 
     private Stmt statement() {
         if (match(PRINT)) return printStatement();
+        if (match(RETURN)) return returnStatement();
         if (match(WHILE)) return whileStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
         if (match(FOR)) return forStatement();
         if (match(IF)) return ifStatement();
 
         return expressionStatement();
+    }
+
+    private Stmt returnStatement() {
+        Token keyword = previous();
+        Expr value = null;
+        if (!check(SEMICOLON)) {
+            value = expression();
+        }
+
+        consume(SEMICOLON, "Expect ';' after return value.");
+        return new Stmt.Return(keyword, value);
     }
 
     private Stmt forStatement() {
