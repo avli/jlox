@@ -16,6 +16,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+def loxMainClass = 'com.github.avli.lox.Lox'
+
 application {
-    mainClassName = 'com.github.avli.lox.Lox'
+    mainClassName = loxMainClass
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': loxMainClass
+    }
 }
