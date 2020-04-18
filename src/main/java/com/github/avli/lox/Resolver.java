@@ -99,6 +99,13 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         return null;
     }
 
+    @Override
+    public Void visitClassStmt(Stmt.Class stmt) {
+        declare(stmt.name);
+        define(stmt.name);
+        return null;
+    }
+
     private void endScope() {
         scopes.pop();
     }
@@ -129,9 +136,6 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-        // fun add(a, b) {
-        //   return a + b;
-        // }
         declare(stmt.name);
         define(stmt.name);
 
