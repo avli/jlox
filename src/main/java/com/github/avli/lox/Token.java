@@ -1,8 +1,8 @@
 package com.github.avli.lox;
 
 public class Token {
-    final TokenType type;
-    final String lexeme;
+    final TokenType type; // kind of a language lexical unit
+    final String lexeme;  // sequence of characters that matches the pattern for a token
     final Object literal;
     final int line;
 
